@@ -99,11 +99,10 @@ class ExemploTransformer(Transformer):
     flag = False
     sum = 0
     agora= False
-    fim= False
+    fim= True
     num= False
     invalid= False
     
-
     def start(self,elementos):
         #print("start")
         #print("maximo no self: ",self.max)
@@ -113,7 +112,7 @@ class ExemploTransformer(Transformer):
         i = getIdx(maxi,self.count)
         print("(b) Elemento mais frequente: '",self.elems[i], "' com",maxi,"ocorrencias")
         print("(c) Soma dos elementos: ",self.sum)
-        if self.agora and self.num and self.fim and not self.invalid:
+        if self.fim and not self.invalid:
             print("(d) A frase é valida")
         else:
             print("(d) A frase é invalida")
@@ -149,10 +148,13 @@ class ExemploTransformer(Transformer):
             self.flag = False
             if not self.agora or not self.num:
                 self.invalid = True
+            self.agora= False
+            self.num= False
             self.fim= True
         elif palavra == "agora":
             self.agora= True
             self.flag = True
+            self.fim = False
 
         if self.l > len(self.elems):
             self.elems.append(str(palavra))
@@ -178,7 +180,7 @@ class ExemploTransformer(Transformer):
 
     pass
 
-frase = "LISTA agora,1,2,fim,3,agora,3,7,fim ."
+frase = "LISTA agora,1,agora,agora,agora,agora,tu,es,um,cavalo,de,corrida,fim ."
 
 p = Lark(grammar)   #não muito bem
 #p = Lark(grammar1)  #recomendada
